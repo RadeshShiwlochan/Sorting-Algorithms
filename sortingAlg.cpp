@@ -44,13 +44,15 @@ std::vector<int> selectionSort(std::vector<int>& vec) {
 	for(int i = 0; i < sizeOfVec - 1; ++i) {
 		//find the index of min number
 		minNumIndx = i;
-		for(int j = i; j < sizeOfVec; ++j) {
+		for(int j = i + 1; j < sizeOfVec; ++j) {
 			if(vec[j] < vec[minNumIndx]) minNumIndx = j;
 		}
 		//swap the value at minNumIndx and i
-		temp = vec[i];
-		vec[i] = vec[minNumIndx];
-		vec[minNumIndx] = temp;
+		if(minNumIndx != i) {
+		    temp = vec[i];
+		    vec[i] = vec[minNumIndx];
+		    vec[minNumIndx] = temp;
+	    }
 	}
 	return vec;
 }
