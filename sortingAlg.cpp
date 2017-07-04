@@ -57,10 +57,29 @@ std::vector<int> selectionSort(std::vector<int>& vec) {
 	return vec;
 }
 
+std::vector<int> bubbleSort(std::vector<int>& vec) {
+	int sizeOfVec= vec.size(), temp = 0;
+	bool flag = true;
+	while(flag) {
+		flag= false;
+	    for(int i = 0; i < sizeOfVec - 1; ++i) {
+	    	if(vec[i] > vec[i + 1]) {
+	            temp = vec[i];
+	            vec[i] = vec[i + 1];
+	            vec[i + 1] = temp;
+	            flag = true;
+	    	}//if
+	    }//for 
+    }//while
+    return vec;
+}
+
 int main(int argc, char* argv[]) {
 
 	std::vector<int> vec = { 1, 4, 3, 5, 6, 2 };
-	auto v = selectionSort(vec);
+	auto v = bubbleSort(vec);
 	print(v);
 	return 0;
 }
+
+
