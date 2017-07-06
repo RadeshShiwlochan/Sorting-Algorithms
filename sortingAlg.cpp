@@ -74,10 +74,34 @@ std::vector<int> bubbleSort(std::vector<int>& vec) {
     return vec;
 }
 
+std::vector<int> merge(std::vector<int>& vecA, std::vector<int>& vecB) {
+	int size = vecA.size() + vecB.size(), sizeA = vecA.size(), 
+	    sizeB = vecB.size(), indexA = 0, indexB = 0, index = 0;
+	std::vector<int> vec(size, 0);    
+	while(indexA < sizeA && indexB < sizeB) {
+		if(vecA[indexA] < vecB[indexB]) {
+			vec[index++] = vecA[indexA++];
+		} 
+		else {
+			vec[index++] = vecB[indexB++];
+		}
+	}//while
+	//if(indexA < indexB ) {
+		for(int i = indexA; i < sizeA; i++)
+			vec[index++] = vecA[indexA++];
+	//}	
+	//else if(indexA > indexB) {
+		for(int i = indexB; i < sizeB; ++i)
+			vec[index++] = vecB[indexB++];
+	//}
+	return vec;    
+}
+
 int main(int argc, char* argv[]) {
 
-	std::vector<int> vec = { 1, 4, 3, 5, 6, 2 };
-	auto v = bubbleSort(vec);
+	std::vector<int> vec = { 1, 3, 4};
+	std::vector<int> vec2 = { 5, 7, 9};
+	auto v = merge(vec, vec2);
 	print(v);
 	return 0;
 }
