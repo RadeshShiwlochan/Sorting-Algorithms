@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
 
-void print(std::vector<int>& vec) {
-	for(int value : vec ) 
-		std::cout << value << " ";
+void print(int arr[], int size) {
+	for(int i = 0; i < size; ++i ) 
+		std::cout << arr[i] << " ";
 	std::cout << std::endl;
 }
 
@@ -74,35 +74,58 @@ std::vector<int> bubbleSort(std::vector<int>& vec) {
     return vec;
 }
 
-std::vector<int> merge(std::vector<int>& vecA, std::vector<int>& vecB) {
-	int size = vecA.size() + vecB.size(), sizeA = vecA.size(), 
-	    sizeB = vecB.size(), indexA = 0, indexB = 0, index = 0;
-	std::vector<int> vec(size, 0);    
-	while(indexA < sizeA && indexB < sizeB) {
-		if(vecA[indexA] < vecB[indexB]) {
-			vec[index++] = vecA[indexA++];
-		} 
-		else {
-			vec[index++] = vecB[indexB++];
-		}
-	}//while
-	//if(indexA < indexB ) {
-		for(int i = indexA; i < sizeA; i++)
-			vec[index++] = vecA[indexA++];
-	//}	
-	//else if(indexA > indexB) {
-		for(int i = indexB; i < sizeB; ++i)
-			vec[index++] = vecB[indexB++];
-	//}
-	return vec;    
+void merge(int arr[], int l, int m, int r) {
+
+	int subArrSize1 = m - l + 1, subArrSize2 = r - m;
+	    
+    int subArr1[subArrSize1], subArr2[subArrSize2];
+
+    for(int i = 0; i < subArrSize1; ++i)
+    	subArr1[i] = arr[i + l];
+
+    for(int j = 0; j < subArrSize2; ++j)
+    	subArr2[j] = arr[j + 1 + m];
+
+    int indexArr1 = 0, indexArr2 = 0, index = l;
+
+    while(indexArr1 < subArrSize1 && indexArr2 < subArrSize2) {
+    	if(subArr1[indexArr1] <= subArr2[indexArr2]) {
+    		arr[index] = subArr1[indexArr1++];
+    	}
+    	else {
+    		arr[index] = subArr2[indexArr2++];
+    	}
+    	index++;
+    }
+
+    while(indexArr1 < subArrSize1) {
+    	arr[index] = subArr1[indexArr1];
+    	index++;
+    	indexArr1++;
+    }
+
+    while(indexArr2 < subArrSize2) {
+    	arr[index] = subArr2[indexArr2];
+    	index++;
+    	indexArr2++;
+    }    
+}
+
+void mergeSort(int arr[], int l, int r) {
+	
+	if(l < r) {
+		int m = (l + r) / 2;
+		mergeSort(arr, l, m);
+		mergeSort(arr, m + 1, r);
+	    merge(arr, l, m, r);
+	}
 }
 
 int main(int argc, char* argv[]) {
 
-	std::vector<int> vec = { 1, 3, 4};
-	std::vector<int> vec2 = { 5, 7, 9};
-	auto v = merge(vec, vec2);
-	print(v);
+	int arr[5] = { 1, 4, 2, 3, 7};
+    mergeSort(arr, 0, 4);
+    print(arr, 5);
 	return 0;
 }
 
